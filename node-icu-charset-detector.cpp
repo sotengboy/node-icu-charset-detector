@@ -14,7 +14,7 @@ class CharsetMatch : public Nan::ObjectWrap
 public:
 
     static void
-    RegisterClass(const v8::Handle<v8::Object> target) {
+    RegisterClass(const v8::Local<v8::Object> target) {
         Nan::HandleScope scope;
         const char* ClassName = "CharsetMatch";
 
@@ -57,7 +57,7 @@ public:
 
     // Internal API
     static CharsetMatch*
-    FromBuffer(v8::Handle<v8::Object> bufferObject) {
+    FromBuffer(v8::Local<v8::Object> bufferObject) {
         return new CharsetMatch(node::Buffer::Data(bufferObject),
                                 node::Buffer::Length(bufferObject));
     }
@@ -69,7 +69,7 @@ public:
         if (info.Length() < 1)
             Nan::ThrowError("Not enough arguments");
 
-        v8::Handle<v8::Object> buffer = info[0]->ToObject();
+        v8::Local<v8::Object> buffer = info[0]->ToObject();
 
         if (!node::Buffer::HasInstance(buffer))
             Nan::ThrowTypeError("Expected Buffer for the argument");
